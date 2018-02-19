@@ -1,17 +1,9 @@
 package ceg4410.wright.edu.myapplication;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.content.Intent;
+import android.os.Bundle;
 
-
-/**
- * Created by David Sutherin on 2/15/2018.
- */
-
-class HelpActivity extends AppCompatActivity {
-
+public class Help extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

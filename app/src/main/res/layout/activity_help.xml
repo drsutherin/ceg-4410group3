@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ceg4410.wright.edu.myapplication.HelpActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:context="ceg4410.wright.edu.myapplication.Help">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HALP"
+        android:layout_marginTop="32dp"
+        android:text="MultiClass Help"
         android:textSize="36sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="382dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="24dp"
+        android:text="From the main screen, please enter your name and select whether you will be using the app as an instructor or as a student."
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 </android.support.constraint.ConstraintLayout>

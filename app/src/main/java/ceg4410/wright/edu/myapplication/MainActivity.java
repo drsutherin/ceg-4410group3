@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openHelpScreen(View view){
-        Intent intent = new Intent(this, HelpActivity.class);
+        Intent intent = new Intent(this, Help.class);
         startActivity(intent);
     }
 }
