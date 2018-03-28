@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Help.class);
         startActivity(intent);
     }
+
+    public void openStudentLobby(View view){
+        Intent intent = new Intent(this, StudentLobby.class);
+        startActivity(intent);
+    }
 }

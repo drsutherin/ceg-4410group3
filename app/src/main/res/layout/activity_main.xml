@@ -24,6 +24,7 @@
         android:layout_width="317dp"
         android:layout_height="65dp"
         android:layout_marginBottom="8dp"
+        android:onClick="openStudentLobby"
         android:text="@string/student_button"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintLeft_toLeftOf="parent"
