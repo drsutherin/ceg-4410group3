@@ -22,4 +22,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StudentLobby.class);
         startActivity(intent);
     }
+
+    public void openTeacherLobby(View view){
+        Intent intent = new Intent(this, TeacherLobby.class);
+        startActivity(intent);
+    }
 }
