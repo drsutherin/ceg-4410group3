@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class TeacherMain extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_main);
 
         mVoiceInputTv = (TextView) findViewById(R.id.voiceInput);
+        mVoiceInputTv.setMovementMethod(new ScrollingMovementMethod());
         mSpeakBtn = (Button) findViewById(R.id.btnSpeak);
         mSpeakBtn.setOnClickListener(new View.OnClickListener() {
 
