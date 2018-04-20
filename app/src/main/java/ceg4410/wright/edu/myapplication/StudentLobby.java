@@ -20,7 +20,7 @@ public class StudentLobby extends AppCompatActivity implements AdapterView.OnIte
             "pt",   //portuguese
             "da"     //danish
     };
-    private String lingo;
+    public String lingo;
     Spinner lang_spinner;
 
     @Override
@@ -40,6 +40,12 @@ public class StudentLobby extends AppCompatActivity implements AdapterView.OnIte
 
     public void openHelpScreen(View view){
         Intent intent = new Intent(this, Help.class);
+        startActivity(intent);
+    }
+
+    public void enterClassroom(View view){
+        Intent intent = new Intent(this, StudentMain.class);
+        intent.putExtra("lang_code", lingo);
         startActivity(intent);
     }
 

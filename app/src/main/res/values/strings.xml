@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Multiclass</string>
     <string name="logo_placeholder">Logo Placeholder</string>
     <string name="select_role">Please Select Role</string>
     <string name="select_language">Please Select Language</string>
