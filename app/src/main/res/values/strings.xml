@@ -7,4 +7,15 @@
     <string name="student_button">Student</string>
     <string name="help_button">Help</string>
     <string name="enter_name">Enter Name</string>
+
+
+    <string-array name="language_array">
+        <item>German</item>
+        <item>Spanish</item>
+        <item>Scots-Gaelic</item>
+        <item>Italian</item>
+        <item>French</item>
+        <item>Portuguese</item>
+        <item>Danish</item>
+    </string-array>
 </resources>
