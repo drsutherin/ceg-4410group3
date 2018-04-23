@@ -18,30 +18,33 @@
     <Button
         android:id="@+id/btnSpeak"
         android:layout_width="180dp"
-        android:layout_height="53dp"
+        android:layout_height="140dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Button"
+        android:text="Speak!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/voiceInput"
-        android:layout_width="372dp"
-        android:layout_height="405dp"
+        android:layout_width="333dp"
+        android:layout_height="234dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:maxLines="5"
         android:scrollbars="vertical"
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintBottom_toTopOf="@+id/btnSpeak"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.195" />
 
 
 </android.support.constraint.ConstraintLayout>
