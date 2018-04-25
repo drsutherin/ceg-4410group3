@@ -92,7 +92,6 @@ public class StudentLobby extends AppCompatActivity implements AdapterView.OnIte
             String room = (String) spinner.getSelectedItem();
 
         }
-
     }
 
 
