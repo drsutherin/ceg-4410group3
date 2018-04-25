@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-<<<<<<< HEAD
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +14,9 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 
 import org.w3c.dom.Text;
-=======
+
 import java.io.*;
->>>>>>> 525f7600e0c78008e06f124f1c78fe4f282478dc
+
 
 public class StudentMain extends AppCompatActivity {
 
