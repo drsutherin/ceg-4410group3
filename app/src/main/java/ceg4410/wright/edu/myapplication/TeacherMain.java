@@ -36,6 +36,7 @@ public class TeacherMain extends AppCompatActivity {
     private static final int REQ_CODE_SPEECH_INPUT = 100;
     private TextView mVoiceInputTv;
     private ArrayList<String> result;
+    private CEG4410_Server server;
 
 
     @Override
@@ -43,7 +44,7 @@ public class TeacherMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_main);
 
-        CEG4410_Server server = new CEG4410_Server();
+        server = new CEG4410_Server();
         //server.connectionList = new ArrayList(100);
         Runnable broadcastHandler = null;
         try {
@@ -89,10 +90,10 @@ public class TeacherMain extends AppCompatActivity {
                 if (resultCode == RESULT_OK && null != data) {
                     result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
-                    // Send result to student device
+                    String text = mVoiceInputTv.getText().toString();
+                    for (PrintWriter p : server.outputStreamList) {
+                        p.write(text);
                     }
-                for (int i = 0; i < result.size(); i++){
-                    System.out.println(result.get(i));
                 }
                 break;
             }
