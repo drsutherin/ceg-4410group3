@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.DatagramPacket;
@@ -37,7 +38,6 @@ public class TeacherMain extends AppCompatActivity {
     private TextView mVoiceInputTv;
     private ArrayList<String> result;
     private CEG4410_Server server;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +90,16 @@ public class TeacherMain extends AppCompatActivity {
                 if (resultCode == RESULT_OK && null != data) {
                     result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
+                    System.out.println("Converting speech to text...");
                     String text = mVoiceInputTv.getText().toString();
-                    for (PrintWriter p : server.outputStreamList) {
-                        p.write(text);
+                    System.out.println("Speech: " + text);
+                    try {
+                        for (int i = 0; i < server.outputStreamList.size(); i++) {
+                            server.outputStreamList.get(i).writeUTF(text);
+                            server.outputStreamList.get(i).flush();
+                        }
+                    } catch (Exception e) {
+                        // Handle Exception
                     }
                 }
                 break;
@@ -104,18 +111,18 @@ public class TeacherMain extends AppCompatActivity {
     public class CEG4410_Server {
 
         private ArrayList<Socket> connectionList;
-        private ArrayList<PrintWriter> outputStreamList;
+        private ArrayList<DataOutputStream> outputStreamList;
 
         public CEG4410_Server() {
             connectionList = new ArrayList<Socket>();
-            outputStreamList = new ArrayList<PrintWriter>();
+            outputStreamList = new ArrayList<DataOutputStream>();
         }
 
         public ArrayList<Socket> getConnectionList() {
             return connectionList;
         }
 
-        public ArrayList<PrintWriter> getOutputStreamList() {
+        public ArrayList<DataOutputStream> getOutputStreamList() {
             return outputStreamList;
         }
 
@@ -169,7 +176,7 @@ public class TeacherMain extends AppCompatActivity {
                     broadcast.constructMessage(broadcastMessage, broadcastAddress, broadcastPort);
                     while (true) {
                         broadcast.broadcast();
-                        sleep(3000);
+                        sleep(500);
                     }
                     //broadcast.stopBroadcast();
                 } catch (IOException | InterruptedException e) {
@@ -184,8 +191,21 @@ public class TeacherMain extends AppCompatActivity {
             public void run() {
                 try {
                     connectionList.add(new ServerSocket(5000).accept());
-                    outputStreamList.add(new PrintWriter(connectionList.get(connectionList.size() - 1).getOutputStream()));
-                } catch (IOException ex) {
+                    outputStreamList.add(new DataOutputStream(connectionList.get(connectionList.size() - 1).getOutputStream()));
+//                    DataOutputStream dataOut = new DataOutputStream(s.getOutputStream());
+//                    while (true) {
+//                        try {
+//                            sleep(1000);
+//                        } catch (Exception e) {
+//
+//                        }
+//                        System.out.println("Attempting to print test string...");
+//                        dataOut.writeUTF("This is a test string");
+//                        dataOut.flush();
+//                        System.out.println("Test string was printed...");
+//                    }
+
+                } catch (IOException e) {
                     // TODO: Exception handling
                 }
             }

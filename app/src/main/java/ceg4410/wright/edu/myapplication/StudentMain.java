@@ -19,6 +19,8 @@ import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 
+import static java.lang.Thread.sleep;
+
 import org.w3c.dom.Text;
 
 import java.io.*;
@@ -147,11 +149,18 @@ public class StudentMain extends AppCompatActivity {
                 server = new Socket(serverIP, serverPort);
                 System.out.println("Connection Established!");
 
-                Scanner inputStream = new Scanner(server.getInputStream());
+                DataInputStream dataIn = new DataInputStream(server.getInputStream());
 
                 while (true) {
-                    if (inputStream.hasNext()) {
-                        System.out.println(inputStream.next());
+                    if (dataIn.available() > 0) {
+                        System.out.println("Attempting to read data...");
+                        System.out.print("Data: ");
+
+                        // This is the text sent from the teacher
+                        String text = dataIn.readUTF();
+
+                        System.out.println(text);
+                        System.out.println();
                     }
                 }
 
