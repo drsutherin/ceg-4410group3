@@ -21,11 +21,13 @@ public class StudentMain extends AppCompatActivity {
      TextView selectedLanguage;
      TextView toTranslate;
      TextView translated;
+     TextView classroomName;
      Button translateButton;
      private String tempTranslate;
      private TranslateOptions options;
      private String lang;   //the language code rep. the selected lang
     private String srcLang;
+    public String classroomNameString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class StudentMain extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         lang = bundle.getString("lang_code");
+        classroomNameString = bundle.getString("classroom");
         srcLang = "en";
 
         toTranslate = (TextView)findViewById( R.id.toTranslate);
@@ -48,8 +51,10 @@ public class StudentMain extends AppCompatActivity {
         selectedLanguage = (TextView)findViewById( R.id.selectedLang);
         selectedLanguage.setText("Selected Language: "+lang);
 
-        translateButton = (Button) findViewById(R.id.translateButton);
+        classroomName = (TextView)findViewById(R.id.classroom_name);
+        classroomName.setText(classroomNameString);
 
+        translateButton = (Button) findViewById(R.id.translateButton);
 
         translateButton.setOnClickListener(new View.OnClickListener(){
             @Override
