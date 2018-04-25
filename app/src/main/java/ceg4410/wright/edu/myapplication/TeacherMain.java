@@ -2,6 +2,7 @@
  *  Much of this code was shamelessly copied from
  *  http://stacktips.com/tutorials/android/speech-to-text-in-android
  *  by Don Miller
+ *  Network code by Joshua Luckenbill
  *
  */
 
@@ -16,10 +17,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Locale;
+
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -27,11 +26,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Locale;
+
+import static java.lang.Thread.sleep;
 
 public class TeacherMain extends AppCompatActivity {
 
     private static final int REQ_CODE_SPEECH_INPUT = 100;
     private TextView mVoiceInputTv;
+    private ArrayList<String> result;
 
 
     @Override
@@ -51,9 +54,9 @@ public class TeacherMain extends AppCompatActivity {
         Runnable connectionHandler = server.new ConnectionHandler();
         new Thread(connectionHandler).start();
 
-        mVoiceInputTv = (TextView) findViewById(R.id.voiceInput);
+        mVoiceInputTv = findViewById(R.id.voiceInput);
         mVoiceInputTv.setMovementMethod(new ScrollingMovementMethod());
-        Button mSpeakBtn = (Button) findViewById(R.id.btnSpeak);
+        Button mSpeakBtn = findViewById(R.id.btnSpeak);
         mSpeakBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -83,9 +86,12 @@ public class TeacherMain extends AppCompatActivity {
         switch (requestCode) {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     mVoiceInputTv.setText(result.get(0));
                     // Send result to student device
+                    }
+                for (int i = 0; i < result.size(); i++){
+                    System.out.println(result.get(i));
                 }
                 break;
             }
