@@ -25,6 +25,7 @@ public class StudentMain extends AppCompatActivity {
      private String tempTranslate;
      private TranslateOptions options;
      private String lang;   //the language code rep. the selected lang
+    private String srcLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class StudentMain extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         lang = bundle.getString("lang_code");
+        srcLang = "en";
 
         toTranslate = (TextView)findViewById( R.id.toTranslate);
         toTranslate.setText("Do not go gentle into that good night,\n" +
@@ -77,9 +79,11 @@ public class StudentMain extends AppCompatActivity {
 
                 final Translation translation =
                         translate.translate(getTextToTranslate(),
-                                Translate.TranslateOption.targetLanguage(langCode));
+                                Translate.TranslateOption.targetLanguage(langCode),
+                                Translate.TranslateOption.sourceLanguage(srcLang));
 
-                Log.i("Language:", langCode);
+                String lg = "from: "+srcLang+" to: "+langCode;
+                Log.i("Language:", lg );
 
                 textViewHandler.post(new Runnable() {
                     @Override
