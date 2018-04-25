@@ -4,6 +4,12 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.Scanner;
 
 import android.util.Log;
 import android.view.View;
@@ -22,19 +28,23 @@ public class StudentMain extends AppCompatActivity {
 
     private static final String API_KEY= "AIzaSyB_ZJ9ZHoFpIPixUQjNDguZg0FO5MSPKu4";
 
-     TextView selectedLanguage;
-     TextView toTranslate;
-     TextView translated;
-     Button translateButton;
-     private String tempTranslate;
-     private TranslateOptions options;
-     private String lang;   //the language code rep. the selected lang
+    TextView selectedLanguage;
+    TextView toTranslate;
+    TextView translated;
+    Button translateButton;
+    private String tempTranslate;
+    private TranslateOptions options;
+    private String lang;   //the language code rep. the selected lang
     private String srcLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
+
+        System.out.println("*********************");
+        System.out.println("STUDENT CREATION TEST");
+        System.out.println("*********************");
 
         lang = "de";
 
@@ -61,6 +71,9 @@ public class StudentMain extends AppCompatActivity {
                 translateText(lang);
             }
         });
+
+        Runnable connectionHandler = new ConnectionHandler();
+        new Thread(connectionHandler).start();
 
     }
 
@@ -102,5 +115,45 @@ public class StudentMain extends AppCompatActivity {
         }.execute();
 
     }
+
+    private class ConnectionHandler implements Runnable {
+        private DatagramSocket broadcastSocket;
+        private byte[] broadcastBuffer;
+        private DatagramPacket broadcastPacket;
+        private Socket server;
+
+        @Override
+        public void run() {
+            try {
+                System.out.println("Student Test");
+                // Setup the broadcast socket
+                broadcastSocket = new DatagramSocket(4445);
+                broadcastBuffer = new byte[1000];
+                broadcastPacket = new DatagramPacket(broadcastBuffer, broadcastBuffer.length);
+
+                // Receive the broadcast packet
+                broadcastSocket.receive(broadcastPacket);
+
+                // The data contained in the broadcast packet should be the port number
+                // which the server is using for client connections.
+                byte[] data = broadcastPacket.getData();
+                InetAddress serverIP = broadcastPacket.getAddress();
+
+                broadcastSocket.close();
+
+                // Convert byte array to int to obtain the server port
+                int serverPort = data[0] << 24 | (data[1] & 0xFF) << 16 | (data[2] & 0xFF) << 8 | (data[3] & 0xFF);
+
+                server = new Socket(serverIP, serverPort);
+                System.out.println("Connection Established");
+
+                Scanner inputStream = new Scanner(server.getInputStream());
+                System.out.println(inputStream.next());
+            } catch (IOException e) {
+                System.out.println("An exception occurred");
+            }
+        }
+
+    } // ConnectionHandler
 
 }

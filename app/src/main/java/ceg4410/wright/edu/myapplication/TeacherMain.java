@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -43,7 +44,7 @@ public class TeacherMain extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_main);
 
         CEG4410_Server server = new CEG4410_Server();
-        server.connectionList = new ArrayList(100);
+        //server.connectionList = new ArrayList(100);
         Runnable broadcastHandler = null;
         try {
             broadcastHandler = server.new BroadcastHandler(server.convertIntToBytes(5000), InetAddress.getByName("255.255.255.255"), 4445);
@@ -102,6 +103,20 @@ public class TeacherMain extends AppCompatActivity {
     public class CEG4410_Server {
 
         private ArrayList<Socket> connectionList;
+        private ArrayList<PrintWriter> outputStreamList;
+
+        public CEG4410_Server() {
+            connectionList = new ArrayList<Socket>();
+            outputStreamList = new ArrayList<PrintWriter>();
+        }
+
+        public ArrayList<Socket> getConnectionList() {
+            return connectionList;
+        }
+
+        public ArrayList<PrintWriter> getOutputStreamList() {
+            return outputStreamList;
+        }
 
         private byte[] convertIntToBytes(int value) {
             return new byte[] {
@@ -151,11 +166,11 @@ public class TeacherMain extends AppCompatActivity {
                 try {
                     Broadcast broadcast = new Broadcast();
                     broadcast.constructMessage(broadcastMessage, broadcastAddress, broadcastPort);
-                    for (int i = 0; i < 5; i++) {
+                    while (true) {
                         broadcast.broadcast();
                         sleep(3000);
                     }
-                    broadcast.stopBroadcast();
+                    //broadcast.stopBroadcast();
                 } catch (IOException | InterruptedException e) {
                     // TODO: Exception handling
                 }
@@ -168,6 +183,7 @@ public class TeacherMain extends AppCompatActivity {
             public void run() {
                 try {
                     connectionList.add(new ServerSocket(5000).accept());
+                    outputStreamList.add(new PrintWriter(connectionList.get(connectionList.size() - 1).getOutputStream()));
                 } catch (IOException ex) {
                     // TODO: Exception handling
                 }
