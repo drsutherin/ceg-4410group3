@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Multiclass</string>
     <string name="logo_placeholder">Logo Placeholder</string>
     <string name="select_role">Please Select Role</string>
     <string name="select_language">Please Select Language</string>
@@ -7,4 +7,15 @@
     <string name="student_button">Student</string>
     <string name="help_button">Help</string>
     <string name="enter_name">Enter Name</string>
+
+
+    <string-array name="language_array">
+        <item>German</item>
+        <item>Spanish</item>
+        <item>Scots-Gaelic</item>
+        <item>Italian</item>
+        <item>French</item>
+        <item>Portuguese</item>
+        <item>Danish</item>
+    </string-array>
 </resources>
