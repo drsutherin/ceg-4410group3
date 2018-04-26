@@ -19,6 +19,8 @@ import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 
+import static java.lang.Thread.sleep;
+
 import org.w3c.dom.Text;
 
 import java.io.*;
@@ -41,10 +43,6 @@ public class StudentMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
-
-        System.out.println("*********************");
-        System.out.println("STUDENT CREATION TEST");
-        System.out.println("*********************");
 
         lang = "de";
 
@@ -125,30 +123,47 @@ public class StudentMain extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                System.out.println("Student Test");
+                System.out.println("Running Connection Handler");
                 // Setup the broadcast socket
                 broadcastSocket = new DatagramSocket(4445);
                 broadcastBuffer = new byte[1000];
                 broadcastPacket = new DatagramPacket(broadcastBuffer, broadcastBuffer.length);
 
+                System.out.println("Listening for broadcast packet...");
                 // Receive the broadcast packet
                 broadcastSocket.receive(broadcastPacket);
+                System.out.println("Broadcast packet received!");
 
                 // The data contained in the broadcast packet should be the port number
                 // which the server is using for client connections.
                 byte[] data = broadcastPacket.getData();
                 InetAddress serverIP = broadcastPacket.getAddress();
 
+                System.out.println("Closing broadcast socket...");
                 broadcastSocket.close();
 
                 // Convert byte array to int to obtain the server port
                 int serverPort = data[0] << 24 | (data[1] & 0xFF) << 16 | (data[2] & 0xFF) << 8 | (data[3] & 0xFF);
 
+                System.out.println("Attempting to connect to the server...");
                 server = new Socket(serverIP, serverPort);
-                System.out.println("Connection Established");
+                System.out.println("Connection Established!");
 
-                Scanner inputStream = new Scanner(server.getInputStream());
-                System.out.println(inputStream.next());
+                DataInputStream dataIn = new DataInputStream(server.getInputStream());
+
+                while (true) {
+                    if (dataIn.available() > 0) {
+                        System.out.println("Attempting to read data...");
+                        System.out.print("Data: ");
+
+                        // This is the text sent from the teacher
+                        String text = dataIn.readUTF();
+
+                        System.out.println(text);
+                        System.out.println();
+                    }
+                }
+
             } catch (IOException e) {
                 System.out.println("An exception occurred");
             }
