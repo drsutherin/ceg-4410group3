@@ -66,7 +66,7 @@ public class StudentMain extends AppCompatActivity {
         translateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                translateText(lang);
+                translateText(toTranslate.toString(), lang);
             }
         });
 
@@ -79,7 +79,7 @@ public class StudentMain extends AppCompatActivity {
         return toTranslate.getText().toString();
     }
 
-    public void translateText(final String langCode){
+    public void translateText(final String toTranslate, final String langCode){
         final TextView textView = (TextView) translated;
         final Handler textViewHandler = new Handler();
 
@@ -93,7 +93,7 @@ public class StudentMain extends AppCompatActivity {
                 Translate translate = options.getService();
 
                 final Translation translation =
-                        translate.translate(getTextToTranslate(),
+                        translate.translate(toTranslate,
                                 Translate.TranslateOption.targetLanguage(langCode),
                                 Translate.TranslateOption.sourceLanguage(srcLang));
 
@@ -161,6 +161,8 @@ public class StudentMain extends AppCompatActivity {
 
                         System.out.println(text);
                         System.out.println();
+
+                        translateText(text, lang);
                     }
                 }
 
