@@ -50,25 +50,25 @@ public class StudentMain extends AppCompatActivity {
         lang = bundle.getString("lang_code");
         srcLang = "en";
 
-        toTranslate = (TextView)findViewById( R.id.toTranslate);
-        toTranslate.setText("Do not go gentle into that good night,\n" +
-                "Old age should burn and rave at close of day;\n" +
-                "Rage, rage against the dying of the light.");
+        //toTranslate = (TextView)findViewById( R.id.toTranslate);
+        //toTranslate.setText("Do not go gentle into that good night,\n" +
+        //        "Old age should burn and rave at close of day;\n" +
+        //        "Rage, rage against the dying of the light.");
 
         translated = (TextView)findViewById( R.id.translated);
 
-        selectedLanguage = (TextView)findViewById( R.id.selectedLang);
-        selectedLanguage.setText("Selected Language: "+lang);
+        //selectedLanguage = (TextView)findViewById( R.id.selectedLang);
+        //selectedLanguage.setText("Selected Language: "+lang);
 
-        translateButton = (Button) findViewById(R.id.translateButton);
+        //translateButton = (Button) findViewById(R.id.translateButton);
 
 
-        translateButton.setOnClickListener(new View.OnClickListener(){
+        /*translateButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 translateText(toTranslate.toString(), lang);
             }
-        });
+        });*/
 
         Runnable connectionHandler = new ConnectionHandler();
         new Thread(connectionHandler).start();
