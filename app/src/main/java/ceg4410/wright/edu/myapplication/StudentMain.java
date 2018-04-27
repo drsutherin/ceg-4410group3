@@ -31,13 +31,14 @@ public class StudentMain extends AppCompatActivity {
     private static final String API_KEY= "AIzaSyB_ZJ9ZHoFpIPixUQjNDguZg0FO5MSPKu4";
 
     TextView selectedLanguage;
-    TextView toTranslate;
+    private String toTranslate;
     TextView translated;
     Button translateButton;
     private String tempTranslate;
     private TranslateOptions options;
     private String lang;   //the language code rep. the selected lang
     private String srcLang;
+    private Boolean finished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +73,14 @@ public class StudentMain extends AppCompatActivity {
 
         Runnable connectionHandler = new ConnectionHandler();
         new Thread(connectionHandler).start();
-
-    }
-
-    public String getTextToTranslate(){
-        return toTranslate.getText().toString();
+        while (!finished)   {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        translateText(toTranslate, lang);
     }
 
     public void translateText(final String toTranslate, final String langCode){
@@ -105,6 +109,7 @@ public class StudentMain extends AppCompatActivity {
                     public void run() {
                         if (textView != null) {
                             textView.setText(translation.getTranslatedText());
+
                         }
                     }
                 });
@@ -157,12 +162,11 @@ public class StudentMain extends AppCompatActivity {
                         System.out.print("Data: ");
 
                         // This is the text sent from the teacher
-                        String text = dataIn.readUTF();
+                        toTranslate = dataIn.readUTF();
 
-                        System.out.println(text);
+                        System.out.println(toTranslate);
                         System.out.println();
-
-                        translateText(text, lang);
+                        finished = true;
                     }
                 }
 
